@@ -20,4 +20,3 @@ online_units int,
 PRIMARY KEY (product_id)
 ); 
 ````
-adfadfasd
