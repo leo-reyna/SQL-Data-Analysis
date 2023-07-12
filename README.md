@@ -1,4 +1,4 @@
-![Alt text](https://assets.digitalocean.com/articles/alligator/boo.svg "a title")
+![Alt text](images/analytics.jpg "analytics")
 # SQL Data Analysis
 Compilation of SQL data analysis related projects and challenges where I practice those skills.
 
