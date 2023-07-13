@@ -38,5 +38,6 @@ WITH Product_AVG_Cost AS (
   FROM dbo.product_information
   GROUP BY product_name
 )
+
 SELECT *
 FROM Product_AVG_Cost;
