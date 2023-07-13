@@ -22,7 +22,8 @@ After selecting the database, create a table within it using the ``CREATE TABLE`
 
 Create this sample table by running the following command:
 
-````CREATE TABLE product_information (
+```text
+CREATE TABLE product_information (
 product_id int, 
 product_name varchar(30), 
 product_type varchar(30), 
@@ -33,4 +34,4 @@ store_units int,
 online_units int,
 PRIMARY KEY (product_id)
 ); 
-````
+```
