@@ -1,7 +1,7 @@
 # How To Use Mathematical Expressions and Aggregate Functions in SQL
 
 To practice many of the mathematical expression examples in this tutorial, you’ll need a database and table loaded with sample data. This tutorial will refer to this sample database and table throughout. The steps to create it are in below copy.
-The original copy of this exercises/tutorial can be found at [Digital Ocean](https://www.digitalocean.com/community/tutorials/how-to-use-mathematical-expressions-in-sql). I changed the code a bit because I was using Microsoft SQL.
+The original copy of this exercises/tutorial can be found at [Digital Ocean](https://www.digitalocean.com/community/tutorials/how-to-use-mathematical-expressions-in-sql).
 
 ## Creating a MathDB
 
@@ -35,3 +35,39 @@ online_units int,
 PRIMARY KEY (product_id)
 ); 
 ```
+
+Insert the following records into the table:
+
+```text
+INSERT INTO product_information
+    (product_id, 
+    product_name, 
+    product_type, 
+    total_inventory, 
+    product_cost, 
+    product_retail, 
+    store_units, 
+    online_units)
+VALUES
+(1, 'chamomile', 'tea', 200, 5.12, 7.50, 38, 52),
+(2, 'chai', 'tea', 100, 7.40, 9.00, 17, 27),
+(3, 'lavender', 'tea', 200, 5.12, 7.50, 50, 112),
+(4, 'english_breakfast', 'tea', 150, 5.12, 7.50, 22, 74),
+(5, 'jasmine', 'tea', 150, 6.17, 7.50, 33, 92),
+(6, 'matcha', 'tea', 100, 6.17, 7.50, 12, 41),
+(7, 'oolong', 'tea', 75, 7.40, 9.00, 10, 29),
+(8, 'tea sampler', 'tea', 50, 6.00, 8.50, 18, 25),
+(9, 'ceramic teapot', 'tea item', 30, 7.00, 9.75, 8, 15),
+(10, 'golden teaspoon', 'tea item', 100, 2.00, 5.00, 18, 67);
+```
+
+## Mathematical Expressions in SQL
+
+Please note this list is not comprehensive and that many RDBMSs have a unique set of mathematical operators.
+
+Addition uses ``+`` symbol
+Subtraction uses the ``-`` symbol
+Multiplication uses the ``*`` symbol
+Division uses ``/`` symbol
+Modulo operations use the ``%`` symbol
+Exponentation uses ``power(x,y)``

@@ -8,7 +8,7 @@ Compilation of SQL data analysis related projects and challenges where I practic
 
 * SQL Languages
   * T-SQL
-  * MySQLd
+  * MySQL
 
 ### Tools
 
