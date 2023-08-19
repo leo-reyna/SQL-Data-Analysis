@@ -65,9 +65,9 @@ VALUES
 
 Please note this list is not comprehensive and that many RDBMSs have a unique set of mathematical operators.
 
-Addition uses ``+`` symbol
-Subtraction uses the ``-`` symbol
-Multiplication uses the ``*`` symbol
-Division uses ``/`` symbol
-Modulo operations use the ``%`` symbol
-Exponentation uses ``power(x,y)``
+*Addition uses ``+`` symbol
+*Subtraction uses the ``-`` symbol
+*Multiplication uses the ``*`` symbol
+*Division uses ``/`` symbol
+*Modulo operations use the ``%`` symbol
+*Exponentation uses ``power(x,y)``
