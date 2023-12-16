@@ -49,3 +49,20 @@ GROUP by gr.Name
 ORDER BY [Num of Tracks Sold] DESC;
 
 /* Rock Sales by Year */
+
+SELECT 
+    YEAR(inv.InvoiceDate) as YearDate,
+    grt.Name,
+    FORMAT(SUM(inv.Total), 'C','EN-US') as YearlyTotal
+FROM dbo.invoice as inv 
+LEFT JOIN InvoiceLine as inl
+    ON inv.InvoiceId = inl.InvoiceId
+LEFT JOIN dbo.Track as trk
+    ON inl.TrackId = trk.TrackId
+LEFT JOIN dbo.Genre as grt 
+    ON trk.GenreId = grt.GenreId
+WHERE grt.Name like 'Rock'
+GROUP BY YEAR(InvoiceDate), grt.Name
+ORDER BY YEAR(InvoiceDate) DESC;
+
+/* Rock Sales by Year */
