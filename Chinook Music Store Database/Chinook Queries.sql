@@ -72,7 +72,7 @@ WITH CitySales AS (
 )
 SELECT
     city,
-    FORMAT(TotalSales, 'C', 'EN-US') AS TotalSales$
+    FORMAT(TotalSales, 'C', 'EN-US') AS TotalSales
 FROM CitySales
 WHERE RowNum <= 3;
 
@@ -81,7 +81,7 @@ WHERE RowNum <= 3;
 WITH CountrySalesTop5 as (
 SELECT inv.BillingCountry,
     SUM(inv.Total) AS TotalSales,
-    ROW_NUMBER() OVER (ORDER BY SUM(Total) DESC) AS RowNum
+    ROW_NUMBER() OVER (ORDER BY SUM(Total) DESC) AS RowNum 
 FROM dbo.Invoice as inv
 LEFT JOIN dbo.InvoiceLine as inl 
     ON inv.InvoiceId = inl.InvoiceId 
@@ -89,6 +89,6 @@ GROUP BY inv.BillingCountry
 )
 SELECT 
     BillingCountry,
-    FORMAT(TotalSales, 'c', 'en-us') AS Totals$
+    FORMAT(TotalSales, 'c', 'en-us') AS TotalSales
     FROM CountrySalesTop5
     WHERE RowNum <= 5
