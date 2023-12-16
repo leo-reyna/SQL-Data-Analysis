@@ -1,11 +1,3 @@
-/*
-Provide a query showing the customer full names, customer ID and country who are not in the USA.
-https://www.kaggle.com/code/alaasedeeq/chinook-questions-with-sqlite
-https://github.com/SUstian/Chinook_Music_Store
-https://github.com/dinataymour/Chinook-Digital-Music-Store
-https://github.com/SUstian/Chinook_Music_Store/blob/master/Chinook%20Analysis.ipynb
-*/
-
 USE Chinook
 
 /*
@@ -56,3 +48,4 @@ LEFT JOIN dbo.Genre as gr
 GROUP by gr.Name
 ORDER BY [Num of Tracks Sold] DESC;
 
+/* Rock Sales by Year */
