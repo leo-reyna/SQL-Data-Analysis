@@ -9,17 +9,14 @@ This data analysis project aimed at assisting Chinook Digital Music Store in opt
 3. Who are the top 5 artists to produce most albums?
 4. Number of tracks sold per genre
 5. Rock sales per year
-6. Top 10 cities with the highest number of total invoices
-7. What are the top 3 cities
-8. Top 5 billing countries
-9. Top 10 customers
-10. Which city has the best customers?
-11. Who is the best customer?
-12. Which top 3 customers had the highest total of invoices?
-13. Top 10 cities with the highest number of total invoices
-14. What are the top 3 cities
-15. Which countries have the most Invoices?
-16. Country with the maximum number of invoice total
+6. What are the top 3 cities
+7. Top 5 billing countries
+8. Top 10 customers
+9. Which city has the best customers?
+10. Who is the best customer?
+11. Which top 3 customers had the highest total of invoices?
+12. Which countries have the most Invoices?
+
 
 ## Schema
 
