@@ -65,4 +65,20 @@ WHERE grt.Name like 'Rock'
 GROUP BY YEAR(InvoiceDate), grt.Name
 ORDER BY YEAR(InvoiceDate) DESC;
 
-/* Rock Sales by Year */
+/* Top 3 cities */
+
+WITH CitySales AS (
+    SELECT
+        c.city,
+        SUM(i.Total) AS TotalSales,
+        ROW_NUMBER() OVER (ORDER BY SUM(Total) DESC) AS RowNum
+    FROM dbo.Invoice AS i 
+    LEFT JOIN dbo.Customer AS c 
+    ON i.CustomerId = c.CustomerId
+    GROUP BY c.city
+)
+SELECT
+    city,
+    FORMAT(TotalSales, 'C', 'EN-US') AS TotalSales$
+FROM CitySales
+WHERE RowNum <= 3;
