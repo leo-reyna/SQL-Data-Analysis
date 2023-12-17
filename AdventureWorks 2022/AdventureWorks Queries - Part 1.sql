@@ -66,4 +66,4 @@ SELECT
     subtotal, 
     (taxAmt*100) as Tax_Percentage
 FROM sales.salesorderheader
-ORDER BY subtotal;
+ORDER BY subtotal asc;
