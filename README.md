@@ -25,6 +25,10 @@ SQL allows you to use math in various ways. You can solve simple arithmetic prob
 
 Credit for this tutorial goes to [Digital Ocean](https://www.digitalocean.com/)
 
-### Chinkook Digital Music Store
+### Chinook Digital Music Store
 
 This data analysis project aimed at assisting Chinook Digital Music Store in optimizing business opportunities and addressing key business-related questions.It contains information about the artists, songs, and albums from the music shop, as well as information on the shop's employees, customers, and the customers purchases.
+
+### AdventureWorks 2022
+
+The AdventureWorks OLTP database is designed to support standard online transaction processing scenarios for a fictional bicycle manufacturer named Adventure Works Cycles. These scenarios span across Manufacturing, Sales, Purchasing, Product Management, Contact Management, and Human Resources. AdventureWorks is prominently featured in code examples within SQL Server Books Online and accompanying samples available for download from the Microsoft SQL Server Samples and Community Projects home page. The database schema is carefully crafted to showcase and emphasize the diverse features of SQL Server.
