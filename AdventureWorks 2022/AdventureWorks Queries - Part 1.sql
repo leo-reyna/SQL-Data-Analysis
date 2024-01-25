@@ -107,6 +107,12 @@ SELECT
 FROM Production.productinventory
 WHERE Shelf in ('A', 'B', 'H')
 GROUP BY ProductID
-HAVING SUM(QUANTITY) > 500
-ORDER by ProductID ASC;
+HAVING SUM(Quantity) > 500
+ORDER BY ProductID ASC;
 
+/* 10. From the Sample table: production.productinventory  write a query in 
+SQL to find the total quantity for a group of locationid multiplied by 10 */
+
+SELECT SUM(Quantity) AS TotalQuantity
+FROM production.productinventory
+GROUP BY (LocationID * 10);
