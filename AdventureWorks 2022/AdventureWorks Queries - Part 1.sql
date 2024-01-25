@@ -116,3 +116,16 @@ SQL to find the total quantity for a group of locationid multiplied by 10 */
 SELECT SUM(Quantity) AS TotalQuantity
 FROM production.productinventory
 GROUP BY (LocationID * 10);
+
+/* 11. From the Sample table: Person.PersonPhone write a 
+query in SQL to find the persons whose last name starts with letter 'L'. 
+Return BusinessEntityID, FirstName, LastName, and PhoneNumber. 
+Sort the result on lastname and firstname
+*/
+SELECT pph.BusinessEntityID, ppe.FirstName, ppe.LastName, pph.PhoneNumber
+FROM  Person.Person AS ppe
+LEFT JOIN Person.PersonPhone as pph
+ON ppe.BusinessEntityID = pph.BusinessEntityID
+WHERE ppe.LastName like 'L%'
+ORDER BY ppe.LastName, ppe.FirstName
+
