@@ -165,7 +165,7 @@ You however, wish to report a single value.
 SELECT BusinessEntityID, VacationHours + SickLeaveHours as AvailableTime
 FROM HumanResources.Employee;
 
--- 14a. Creating a function for it. Display the full name. Display lowest available time
+-- 14a. Creating a function for employee's available time. Display the full name. Display lowest available time
 -- First, check if the function already exists, drop it if it does
 
 IF OBJECT_ID('dbo.ufnCalculateAvailableTime') IS NOT NULL
@@ -182,7 +182,7 @@ DECLARE @AvailableTime INT;
    RETURN @AvailableTime
    END;
 
--- Now querying with the function
+-- Using the function
 SELECT 
     per.BusinessEntityID as EmployeeID,
     per.firstname + ' ' + per.LastName as FullName, 
