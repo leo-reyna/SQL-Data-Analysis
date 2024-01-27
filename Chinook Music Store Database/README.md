@@ -1,4 +1,4 @@
-# Chinkook Digital Music Store - Analysis Summary
+# Chinook Digital Music Store - Analysis Summary
 
 This data analysis project aimed at assisting Chinook Digital Music Store in optimizing business opportunities and addressing key business-related questions.It contains information about the artists, songs, and albums from the music shop, as well as information on the shop's employees, customers, and the customers purchases.
 
@@ -20,7 +20,7 @@ This data analysis project aimed at assisting Chinook Digital Music Store in opt
 
 ## Schema
 
-![schema.](Images/schema.jpg) "Chinook Schema")
+![schema.](Images/schema.jpg) **Chinook Schema**
 
 ## Tools
 
