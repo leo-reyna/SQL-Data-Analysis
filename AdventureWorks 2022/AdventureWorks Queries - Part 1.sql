@@ -168,12 +168,12 @@ FROM HumanResources.Employee;
 -- 14a. Creating a function for it. Display the full name. Display lowest available time
 -- First, check if the function already exists, drop it if it does
 
-IF OBJECT_ID('dbo.fn_CalculateAvailableTime') IS NOT NULL
+IF OBJECT_ID('dbo.ufnCalculateAvailableTime') IS NOT NULL
     DROP FUNCTION HumanResources.fn_CalculateAvailableTime;
 GO
 
 -- Creating the Function
-CREATE FUNCTION HumanResources.fn_CalculateAvailableTime (@VacationHours INT, @SickLeaveHours INT)
+CREATE FUNCTION dbo.ufnCalculateAvailableTime (@VacationHours INT, @SickLeaveHours INT)
 RETURNS INT        
 AS
 BEGIN
@@ -186,7 +186,7 @@ DECLARE @AvailableTime INT;
 SELECT 
     per.BusinessEntityID as EmployeeID,
     per.firstname + ' ' + per.LastName as FullName, 
-    HumanResources.fn_CalculateAvailableTime(VacationHours, SickLeaveHours) AS AvailableTime
+    dbo.ufnCalculateAvailableTime(VacationHours, SickLeaveHours) AS AvailableTime
 FROM HumanResources.Employee as emp
 left JOIN Person.Person as per 
 ON EMP.BusinessEntityID = PER.BusinessEntityID
