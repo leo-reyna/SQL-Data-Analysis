@@ -129,3 +129,25 @@ ON ppe.BusinessEntityID = pph.BusinessEntityID
 WHERE ppe.LastName like 'L%'
 ORDER BY ppe.LastName, ppe.FirstName
 
+/* 12. From  sales.salesorderheader write a query in SQL to find the sum of subtotal column. 
+Group the sum on distinct salespersonid and customerid. Rolls up the results into 
+subtotal and running total. Return salespersonid, customerid and sum of subtotal 
+column i.e. sum_subtotal 
+*/
+SELECT 
+    SalesPersonID, 
+    CustomerID,       
+    SUM(SubTotal) AS sum_SubTotal,
+    SUM(SUM(SubTotal)) OVER (ORDER BY SalesPersonID, CustomerID) AS Running_Total
+FROM sales.salesorderheader
+WHERE SalesPersonID IS NOT NULL
+GROUP BY SalesPersonID, CustomerID
+
+/*
+13. From production.productinventory write a query in SQL to find the sum of the 
+quantity of all combination of group of distinct locationid and shelf column. 
+Return locationid, shelf and sum of quantity as TotalQuantity
+ */
+SELECT locationid, shelf, SUM(quantity) AS TotalQuantity
+FROM production.productinventory
+GROUP BY CUBE (locationid, shelf);
