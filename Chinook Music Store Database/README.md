@@ -17,11 +17,11 @@ This data analysis project aimed at assisting Chinook Digital Music Store in opt
 11. Which top 3 customers had the highest total of invoices?
 12. Which countries have the most Invoices?
 
-
 ## Schema
 
 ![schema.](Images/schema.jpg)
-**Chinook Schema**
+
+Chinook Schema
 
 ## Tools
 
