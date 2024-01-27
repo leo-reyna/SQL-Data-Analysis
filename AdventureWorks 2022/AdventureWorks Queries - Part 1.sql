@@ -151,3 +151,44 @@ Return locationid, shelf and sum of quantity as TotalQuantity
 SELECT locationid, shelf, SUM(quantity) AS TotalQuantity
 FROM production.productinventory
 GROUP BY CUBE (locationid, shelf);
+SELECT locationid, SUM(quantity) AS TotalQuantity
+FROM production.productinventory
+GROUP BY GROUPING SETS ( locationid, () );
+
+/*
+14. You are querying a table that lacks the precise bit of information you need. However, you are able to write an 
+expression to generate the result that you are after. For example, you want to report on total time off available 
+to employees. Your database design divides time off into separate buckets for vacation time and sick time. 
+You however, wish to report a single value.
+*/
+
+SELECT BusinessEntityID, VacationHours + SickLeaveHours as AvailableTime
+FROM HumanResources.Employee;
+
+-- 14a. Creating a function for it. Display the full name. Display lowest available time
+-- First, check if the function already exists, drop it if it does
+
+IF OBJECT_ID('dbo.fn_CalculateAvailableTime') IS NOT NULL
+    DROP FUNCTION HumanResources.fn_CalculateAvailableTime;
+GO
+
+-- Creating the Function
+CREATE FUNCTION HumanResources.fn_CalculateAvailableTime (@VacationHours INT, @SickLeaveHours INT)
+RETURNS INT        
+AS
+BEGIN
+DECLARE @AvailableTime INT;
+   SET @AvailableTime = ISNULL(@VacationHours, 0)  + ISNULL(@SickLeaveHours, 0)
+   RETURN @AvailableTime
+   END;
+
+-- Now querying with the function
+SELECT 
+    per.BusinessEntityID as EmployeeID,
+    per.firstname + ' ' + per.LastName as FullName, 
+    HumanResources.fn_CalculateAvailableTime(VacationHours, SickLeaveHours) AS AvailableTime
+FROM HumanResources.Employee as emp
+left JOIN Person.Person as per 
+ON EMP.BusinessEntityID = PER.BusinessEntityID
+ORDER BY AvailableTime;
+
