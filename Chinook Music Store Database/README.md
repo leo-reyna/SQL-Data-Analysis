@@ -20,7 +20,8 @@ This data analysis project aimed at assisting Chinook Digital Music Store in opt
 
 ## Schema
 
-![schema.](Images/schema.jpg) **Chinook Schema**
+![schema.](Images/schema.jpg)
+**Chinook Schema**
 
 ## Tools
 
