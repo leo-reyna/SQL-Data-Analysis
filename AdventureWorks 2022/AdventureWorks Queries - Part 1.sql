@@ -207,3 +207,11 @@ SELECT
 FROM Production.Workorder
 WHERE StartDate  >= '2013-12-01' AND  EndDate <= '2013-12-31'  and ScrappedQty > 0 
 ORDER BY ScrappedQty DESC
+
+/* 
+15a. Distinct Cities, check for StateProviceID 
+*/
+
+SELECT DISTINCT City , StateProvinceID -- Using this ID column to weed out dups
+FROM Person.Address
+ORDER BY City;
