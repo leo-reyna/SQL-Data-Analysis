@@ -34,5 +34,7 @@ This data analysis project aimed at assisting Chinook Digital Music Store in opt
 The AdventureWorks OLTP database is designed to support standard online transaction processing scenarios for a fictional bicycle manufacturer named Adventure Works Cycles. These scenarios span across Manufacturing, Sales, Purchasing, Product Management, Contact Management, and Human Resources. AdventureWorks is prominently featured in code examples within SQL Server Books Online and accompanying samples available for download from the Microsoft SQL Server Samples and Community Projects home page. The database schema is carefully crafted to showcase and emphasize the diverse features of SQL Server.
 
 ### NorthwindTraders Maven Analytics Challenge
-This repository has sales & order data for Northwind Traders, a fictitious gourmet food supplier, including information on customers, products, orders, shippers, and employees tables in .csv format.  
-This challenge was presented by [Maven Analytics](https://app.mavenanalytics.io//) in May 2023.
+
+This repository has sales & order data for Northwind Traders, a fictitious gourmet food supplier, including information on customers, products, orders, shippers, and employees tables in .csv format.
+
+This challenge was presented by [Maven Analytics](https://app.mavenanalytics.io//) in May 2023

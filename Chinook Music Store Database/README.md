@@ -2,7 +2,7 @@
 
 This data analysis project aimed at assisting Chinook Digital Music Store in optimizing business opportunities and addressing key business-related questions.It contains information about the artists, songs, and albums from the music shop, as well as information on the shop's employees, customers, and the customers purchases.
 
-## Business Questions
+## Business Questions Examples
 
 1. Create a query that create a list of customers who are not in the USA, include their customer ID, full name and country.
 2. Create a query showing a unique list of billing countries from the Invoice table

@@ -174,13 +174,13 @@ GO
 
 -- Creating the Function
 CREATE FUNCTION dbo.ufnCalculateAvailableTime (@VacationHours INT, @SickLeaveHours INT)
-RETURNS INT        
+RETURNS INT
 AS
 BEGIN
 DECLARE @AvailableTime INT;
    SET @AvailableTime = ISNULL(@VacationHours, 0)  + ISNULL(@SickLeaveHours, 0)
    RETURN @AvailableTime
-   END;
+END;
 
 -- Using the function
 SELECT 
