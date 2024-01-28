@@ -192,3 +192,18 @@ left JOIN Person.Person as per
 ON EMP.BusinessEntityID = PER.BusinessEntityID
 ORDER BY AvailableTime;
 
+/* 
+15. Locate all December 2013 Work Orders produced on that month.
+It should have no Scrapped units. Sort results so the work orders
+with highest amount of scapped units appear at the top
+Table: Production.Workorder
+*/
+
+SELECT 
+	WorkOrderID as 'Work Order Id',
+	ScrappedQty as 'Scrapped Qty',
+	StartDate as 'Start Date',
+	EndDate as 'End Date'
+FROM Production.Workorder
+WHERE StartDate  >= '2013-12-01' AND  EndDate <= '2013-12-31'  and ScrappedQty > 0 
+ORDER BY ScrappedQty DESC
