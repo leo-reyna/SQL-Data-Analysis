@@ -209,9 +209,24 @@ WHERE StartDate  >= '2013-12-01' AND  EndDate <= '2013-12-31'  and ScrappedQty >
 ORDER BY ScrappedQty DESC
 
 /* 
-15a. Distinct Cities, check for StateProviceID 
+15a. Distinct Cities, check for StateProviceID to be constrai the results
 */
 
 SELECT DISTINCT City , StateProvinceID -- Using this ID column to weed out dups
 FROM Person.Address
 ORDER BY City;
+
+/*
+16b. Subquery - Looking for a Job Title and its ID that has a pay rate higher than 50.
+*/
+
+SELECT *
+FROM
+(
+SELECT pyh.BusinessEntityID as ID, emp.JobTitle, Rate as PayRate
+FROM HumanResources.EmployeePayHistory as pyh
+LEFT JOIN HumanResources.Employee as emp
+ON pyh.BusinessEntityID = emp.BusinessEntityID
+)X
+WHERE PayRate > 50;
+
