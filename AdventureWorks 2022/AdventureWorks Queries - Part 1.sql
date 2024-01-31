@@ -217,16 +217,24 @@ FROM Person.Address
 ORDER BY City;
 
 /*
-16b. Subquery - Looking for a Job Title and its ID that has a pay rate higher than 50.
+16 Subquery - Looking for a Job Title and its ID that has a pay rate higher than 50.
 */
 
 SELECT *
 FROM
 (
-SELECT pyh.BusinessEntityID as ID, emp.JobTitle, Rate as PayRate
+SELECT pyh.BusinessEntityID as ID, emp.JobTitle as Title, Rate as [Pay Rate]
 FROM HumanResources.EmployeePayHistory as pyh
 LEFT JOIN HumanResources.Employee as emp
 ON pyh.BusinessEntityID = emp.BusinessEntityID
 )X
-WHERE PayRate > 50;
+WHERE [Pay Rate] >= 50;
 
+/*
+Find the Name where the name starts with C
+and Bicycle or City in them
+*/
+
+SELECT Name
+FROM Purchasing.Vendor
+WHERE (Name LIKE 'C%') AND ((Name LIKE '%Bicycle%') OR (Name LIKE '%Bike%'))
