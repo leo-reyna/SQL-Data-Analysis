@@ -1,5 +1,6 @@
 /* SQL Queries: AdventureWorks Part-I
-LR December 2023
+Over 100 Queries
+LR December 2023 - Current 
 */
 
 USE AdventureWorks2022
@@ -280,3 +281,12 @@ FROM Sales.SalesOrderHeader
 GROUP BY DATEPART(year, OrderDate)
 HAVING DATEPART(year, OrderDate) <= 2016
 ORDER BY YearOfOrderDate;
+
+/*
+Insights:
+YearOfOrderDate	TotalDueOrder
+2011	$14,155,699.53
+2012	$37,675,700.31
+2013	$48,965,887.96
+2014	$22,419,498.32
+*/
