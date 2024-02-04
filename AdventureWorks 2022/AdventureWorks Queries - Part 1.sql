@@ -259,9 +259,10 @@ FROM Purchasing.Vendor
 WHERE (Name LIKE 'C%') AND ((Name LIKE '%Bicycle%') OR (Name LIKE '%Bike%'))
 
 /*
-16. From Person.BusinessEntityAddress table write a query in SQL to retrieve the number of employees for each City. Return city and numberof employees. Sort the result in ascending order on city. 
+16. From Person.BusinessEntityAddress table write a query in SQL to retrieve 
+the number of employees for each City. Return city and numberof employees. 
+Sort the result in ascending order on city. 
 Insights: 575 Rows returned
-
 */
 
 SELECT pa.City, COUNT(pa.City) as NumberofEmployees
@@ -272,7 +273,9 @@ GROUP BY pa.City
 ORDER BY pa.City;
 
 /*
-17. From the Sales.SalesOrderHeader table write a query in SQL to retrieve the total sales for each year. Return the year part of order date and total due amount. Sort the result in ascending order on year part of order date.
+17. From the Sales.SalesOrderHeader table write a query in SQL to retrieve the 
+total sales for each year. Return the year part of order date and total due amount. 
+Sort the result in ascending order on year part of order date.
 */
 
 SELECT DATEPART(year, OrderDate) AS YearOfOrderDate,
@@ -292,7 +295,9 @@ YearOfOrderDate	TotalDueOrder
 */
 
 /* 
-19. From Person.ContactType table write a query in SQL to find the contacts who are designated as a manager in various departments. Returns ContactTypeID, name. Sort the result set in descending order.
+19. From Person.ContactType table write a query in SQL to 
+find the contacts who are designated as a manager in various departments. 
+Returns ContactTypeID, name. Sort the result set in descending order.
 */
 SELECT ContactTypeID, Name
 FROM Person.ContactType 
