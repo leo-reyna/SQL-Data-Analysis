@@ -148,12 +148,30 @@ GROUP BY SalesPersonID, CustomerID
 quantity of all combination of group of distinct locationid and shelf column. 
 Return locationid, shelf and sum of quantity as TotalQuantity
  */
+ -- 203 Rows Returned
+ SELECT 
+	LocationID,
+	Shelf,
+	SUM(Quantity) as TotalQuantity
+ FROM Production.ProductInventory
+ GROUP BY GROUPING SETS
+	(ROLLUP(LocationId, Shelf),CUBE(LocationId, Shelf));
+
+-- Just testing here below semi-related 
 SELECT locationid, shelf, SUM(quantity) AS TotalQuantity
 FROM production.productinventory
 GROUP BY CUBE (locationid, shelf);
+
+-- By Location Id
 SELECT locationid, SUM(quantity) AS TotalQuantity
 FROM production.productinventory
 GROUP BY GROUPING SETS ( locationid, () );
+
+--Totaling  the shelves
+SELECT Shelf,
+SUM(quantity) AS TotalQuantity
+FROM production.productinventory
+GROUP BY GROUPING SETS ( Shelf, () );
 
 /*
 14. You are querying a table that lacks the precise bit of information you need. However, you are able to write an 
@@ -209,7 +227,7 @@ WHERE StartDate  >= '2013-12-01' AND  EndDate <= '2013-12-31'  and ScrappedQty >
 ORDER BY ScrappedQty DESC
 
 /* 
-15a. Distinct Cities, check for StateProviceID to be constrai the results
+15a. Distinct Cities, check for StateProviceID to be constrained the results
 */
 
 SELECT DISTINCT City , StateProvinceID -- Using this ID column to weed out dups
@@ -217,7 +235,7 @@ FROM Person.Address
 ORDER BY City;
 
 /*
-16 Subquery - Looking for a Job Title and its ID that has a pay rate higher than 50.
+15b Subquery - Looking for a Job Title and its ID that has a pay rate higher than 50.
 */
 
 SELECT *
@@ -238,3 +256,27 @@ and Bicycle or City in them
 SELECT Name
 FROM Purchasing.Vendor
 WHERE (Name LIKE 'C%') AND ((Name LIKE '%Bicycle%') OR (Name LIKE '%Bike%'))
+
+/*
+16. From Person.BusinessEntityAddress table write a query in SQL to retrieve the number of employees for each City. Return city and numberof employees. Sort the result in ascending order on city. 
+Insights: 575 Rows returned
+
+*/
+
+SELECT pa.City, COUNT(pa.City) as NumberofEmployees
+FROM Person.BusinessEntityAddress as be
+INNER JOIN Person.Address as pa
+ON be.AddressID = pa.AddressID
+GROUP BY pa.City
+ORDER BY pa.City;
+
+/*
+17. From the Sales.SalesOrderHeader table write a query in SQL to retrieve the total sales for each year. Return the year part of order date and total due amount. Sort the result in ascending order on year part of order date.
+*/
+
+SELECT DATEPART(year, OrderDate) AS YearOfOrderDate,
+       FORMAT(SUM(TotalDue), 'C', 'EN') AS TotalDueOrder
+FROM Sales.SalesOrderHeader
+GROUP BY DATEPART(year, OrderDate)
+HAVING DATEPART(year, OrderDate) <= 2016
+ORDER BY YearOfOrderDate;
