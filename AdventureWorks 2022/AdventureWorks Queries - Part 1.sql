@@ -290,3 +290,21 @@ YearOfOrderDate	TotalDueOrder
 2013	$48,965,887.96
 2014	$22,419,498.32
 */
+
+/* 
+19. From Person.ContactType table write a query in SQL to find the contacts who are designated as a manager in various departments. Returns ContactTypeID, name. Sort the result set in descending order.
+*/
+SELECT ContactTypeID, Name
+FROM Person.ContactType 
+WHERE Name LIKE '%Manager%'
+ORDER by ContactTypeID DESC;
+
+/* Results:
+ContactTypeID	Name
+19	Sales Manager
+15	Purchasing Manager
+13	Product Manager
+8	Marketing Manager
+6	International Marketing Manager
+1	Accounting Manager
+*/
