@@ -313,3 +313,33 @@ ContactTypeID	Name
 6	International Marketing Manager
 1	Accounting Manager
 */
+
+/* 
+20. From Person.BusinessEntityContact write a query in SQL to make a list 
+of contacts who are designated as 'Purchasing Manager'. 
+Return BusinessEntityID, LastName, and FirstName columns. 
+Sort the result set in ascending order of LastName, and FirstName.
+Additional tables: Person.ContactType and Person.Person
+*/
+
+SELECT 
+	pp.BusinessEntityID, 
+	LastName, 
+	FirstName
+FROM Person.BusinessEntityContact as bec
+INNER JOIN Person.ContactType as ct
+	ON ct.ContactTypeID = bec.ContactTypeID
+INNER JOIN Person.Person as pp
+	ON pp.BusinessEntityID = bec.PersonID
+WHERE ct.Name like 'Purchasing Manager'
+ORDER BY LastName, FirstName;
+
+/* 
+Results: 245 Rows
+================
+BusinessEntityID	LastName	FirstName
+1149	Alexander	Mary
+363	Arakawa	Hannah
+365	Arbelaez	Kyley
+...
+*/
