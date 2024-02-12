@@ -370,8 +370,3 @@ SalesOrderID	TotalValue
 67298	$102,725.73
 50297	$103,362.34
 */
-
-/*
-20b. Write a query against the Sales.OrdersOrdersDetail table that returns
- the three shipped-to countries with the highest average freight in 2007.
-*/
