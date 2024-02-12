@@ -343,3 +343,35 @@ BusinessEntityID	LastName	FirstName
 365	Arbelaez	Kyley
 ...
 */
+
+/*
+20a. Write a query against the Sales.OrderDetails table that returns orders with 
+total value (quantity * unitprice) greater or equal to 90,000 sorted by total value on the top 10.
+*/
+use AdventureWorks2022
+SELECT TOP 10
+    SalesOrderID,
+    FORMAT(SUM(OrderQty * UnitPrice),'C','EN-US') AS TotalValue
+FROM Sales.SalesOrderDetail
+GROUP BY SalesOrderID
+HAVING SUM(OrderQty * UnitPrice) >= 90000 
+ORDER BY TotalValue;
+
+/* Results: 
+SalesOrderID	TotalValue
+47990	$100,216.53
+46066	$100,378.91
+48336	$100,857.05
+51857	$100,922.15
+46645	$101,373.12
+51711	$101,678.38
+46067	$101,857.21
+47451	$102,392.55
+67298	$102,725.73
+50297	$103,362.34
+*/
+
+/*
+20b. Write a query against the Sales.OrdersOrdersDetail table that returns
+ the three shipped-to countries with the highest average freight in 2007.
+*/
