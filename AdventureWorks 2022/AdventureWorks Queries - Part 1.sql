@@ -370,3 +370,24 @@ SalesOrderID	TotalValue
 67298	$102,725.73
 50297	$103,362.34
 */
+
+/* Basic Statistics about AdventureWorks  
+Find the customer that spent the most, get the total freight,
+average sale, max sale, min sale, last order date, first order date
+*/
+
+SELECT 
+	soh.CustomerID,
+	pen.FirstName + ' ' +  pen.LastName as FullName,
+	SUM(soh.TotalDue) as TotalPurchaseAmount,
+	SUM(soh.Freight) as TotalFreightAmount,
+	AVG(soh.TotalDue) as AvgPurchaseAmount,
+	MIN(soh.TotalDue) as LowestPurchaseAmount,
+	MAX(soh.Totaldue) as MaxPurchaseAmount,
+	MIN(soh.OrderDate) as FirstOrderDate,
+	MAX(soh.OrderDate) as LastOrderDate
+FROM Sales.SalesOrderHeader AS soh
+INNER JOIN Person.Person AS pen
+	ON soh.CustomerID = pen.BusinessEntityID
+GROUP BY  soh.CustomerID, pen.FirstName, pen.LastName
+ORDER by SUM(soh.TotalDue) DESC;
