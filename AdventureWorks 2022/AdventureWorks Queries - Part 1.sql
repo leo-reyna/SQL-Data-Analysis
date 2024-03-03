@@ -371,7 +371,7 @@ SalesOrderID	TotalValue
 50297	$103,362.34
 */
 
-/* Basic Statistics about AdventureWorks  
+/* 20b. Basic Statistics about AdventureWorks  
 Find the customer that spent the most, get the total freight,
 average sale, max sale, min sale, last order date, first order date
 */
@@ -391,3 +391,44 @@ INNER JOIN Person.Person AS pen
 	ON soh.CustomerID = pen.BusinessEntityID
 GROUP BY  soh.CustomerID, pen.FirstName, pen.LastName
 ORDER by SUM(soh.TotalDue) DESC;
+
+/*
+Top 2
+Hannah Clark 
+Taylor Jones
+*/
+
+/* 21.
+From the following tables:
+        Sales.SalesPerson
+        Person.Person
+        Person.Address
+Write a query in SQL to retrieve the salesperson for each PostalCode who belongs 
+to a territory and SalesYTD is not zero. Return row numbers of each group of PostalCode, last name, 
+salesytd, postalcode column. 
+Sort the salesytd of each postalcode group in descending order. Shorts the postalcode in ascending orde
+*/
+
+SELECT
+	 ROW_NUMBER() OVER (PARTITION BY pa.PostalCode ORDER BY SalesYTD DESC) AS RowNumber
+	, pp.LastName
+	, sp.SalesYTD
+	, pa.PostalCode
+FROM Sales.SalesPerson as sp
+INNER JOIN Person.Person as pp
+	ON sp.BusinessEntityID = pp.BusinessEntityID
+INNER JOIN Person.Address as pa
+	On pa.AddressID= pp.BusinessEntityID
+WHERE TerritoryID is not NULL AND SalesYTD <> 0
+ORDER BY pa.PostalCode;
+
+/* Results:
+RowNumber	LastName	SalesYTD	PostalCode
+1	Mitchell	4251368.5497	98027
+2	Blythe	3763178.1787	98027
+3	Carson	3189418.3662	98027
+4	Reiter	2315185.611	98027
+5	Vargas	1453719.4653	98027
+6	Ansman-Wolfe	1352577.1325	98027
+1	Pak	4116871.2277	98055
+*/
