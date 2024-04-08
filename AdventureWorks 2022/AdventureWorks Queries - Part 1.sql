@@ -423,6 +423,7 @@ WHERE TerritoryID is not NULL AND SalesYTD <> 0
 ORDER BY pa.PostalCode;
 
 /* Results:
+
 RowNumber	LastName	SalesYTD	PostalCode
 1	Mitchell	4251368.5497	98027
 2	Blythe	3763178.1787	98027
@@ -431,4 +432,5 @@ RowNumber	LastName	SalesYTD	PostalCode
 5	Vargas	1453719.4653	98027
 6	Ansman-Wolfe	1352577.1325	98027
 1	Pak	4116871.2277	98055
+
 */
