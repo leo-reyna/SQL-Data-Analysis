@@ -398,8 +398,7 @@ Hannah Clark
 Taylor Jones
 */
 
-/* 21.
-From the following tables:
+/* 21. From the following tables:
         Sales.SalesPerson
         Person.Person
         Person.Address
@@ -408,7 +407,7 @@ to a territory and SalesYTD is not zero. Return row numbers of each group of Pos
 salesytd, postalcode column. 
 Sort the salesytd of each postalcode group in descending order. Shorts the postalcode in ascending orde
 */
-
+use AdventureWorks2022
 SELECT
 	 ROW_NUMBER() OVER (PARTITION BY pa.PostalCode ORDER BY SalesYTD DESC) AS RowNumber
 	, pp.LastName
@@ -434,3 +433,31 @@ RowNumber	LastName	SalesYTD	PostalCode
 1	Pak	4116871.2277	98055
 
 */
+
+/* 
+22. Number of contacts for each type and name
+From the following table write a query in SQL to count the number of contacts 
+for combination of each type and name. 
+Filter the output for those who have 100 or more contacts. 
+Return ContactTypeID and ContactTypeName and BusinessEntityContact. 
+Sort the result set in descending order on number of contacts.
+Tables: Person.BusinessEntityContact, Person.ContactType
+*/
+
+SELECT 
+    -- Selecting the contact type ID
+    pc.ContactTypeID, 
+    -- Renaming the Name column as CTypeName for better readability
+    pc.Name AS CTypeName, 
+    -- Counting the number of contacts for each contact type
+    COUNT(*) AS NOcontacts
+-- Joining Person.BusinessEntityContact table with Person.ContactType table based on specific conditions
+FROM Person.BusinessEntityContact AS pbe
+    INNER JOIN Person.ContactType AS pc
+        ON pc.ContactTypeID = pbe.ContactTypeID
+-- Grouping the result set by contact type ID and name
+GROUP BY pc.ContactTypeID, pc.Name
+-- Filtering the groups to include only those with a count of contacts greater than or equal to 100
+HAVING COUNT(*) >= 100
+-- Sorting the result set by the count of contacts in descending order
+ORDER BY COUNT(*) DESC;
