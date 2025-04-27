@@ -107,3 +107,42 @@ GROUP BY
     cs.continent, 
     ir.inflation_rate
 ORDER BY hs.year, average_happiness_score DESC;
+
+-- SELF JOIN
+SELECT * FROM employees;
+
+-- Employee with the same salary
+SELECT *
+FROM employees as e1
+INNER JOIN employees as e2
+	on e1.salary = e2.salary
+WHERE e1.employee_name <> e2.employee_name 
+	AND e1.employee_id > e2.employee_id;
+
+-- Here is the final query
+SELECT e1.employee_id, e1.employee_name, e1.salary,
+	   e2.employee_id, e2.employee_name, e2.salary
+FROM employees as e1
+INNER JOIN employees as e2
+	on e1.salary = e2.salary
+WHERE e1.employee_id > e2.employee_id;
+
+-- Employees that have a greater salary
+SELECT e1.employee_id, e1.employee_name, e1.salary,
+	   e2.employee_id, e2.employee_name, e2.salary
+FROM employees as e1
+INNER JOIN employees as e2
+	on e1.salary > e2.salary
+ORDER BY e1.employee_id;
+
+-- Employees and their managers
+SELECT * 
+FROM employees;
+
+-- Final query
+SELECT e1.employee_id, e1.employee_name, e1.manager_id,
+e2.employee_name as manager_name
+FROM employees as e1
+LEFT JOIN employees as e2
+ON e1.manager_id = e2.employee_id;
+
