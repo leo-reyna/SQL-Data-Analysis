@@ -134,8 +134,35 @@ ON hs.country = country_hs.country) as hs_country_hs
 WHERE happiness_score > avg_hs_by_country + 1;
 
 /*
-Assignment: Reviewing products produced by each factory
+« Assignment 2: Subqueries in the FROM clause »
+« Reviewing products produced by each factory »
 Need a List of factories along with the names of the products  they produce
 and the number of products they produce. 
 Headers: factory name, product_Name, num_products
 */
+
+-- All factories and products
+SELECT factory, product_name 
+FROM products;
+
+-- All factories and their total number of products
+SELECT factory, COUNT(product_id) as num_prod
+FROM products
+GROUP BY factory;
+
+-- Final query with subqueries
+SELECT 
+	fp.factory,
+	fp.product_name,
+	fn.num_products
+FROM
+(SELECT factory, product_name 
+FROM products) as fp -- final products
+LEFT JOIN
+(SELECT factory, COUNT(product_id) as num_products
+FROM products
+GROUP BY factory) as fn -- final numbers
+on fp.factory = fn.factory
+order by fp.factory, fp.product_name;
+
+
