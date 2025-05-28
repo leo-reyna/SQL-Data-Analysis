@@ -22,7 +22,7 @@ ORDER BY unit_price DESC;
 
 
 -- 2. Subqueries in the FROM clause
--- Return each country's average happiness score, along with the country's avergae happiness scores.
+-- Return each country's average happiness score, along with the country's average happiness scores.
 SELECT hs.year, 
        hs.country, 
        hs.happiness_score,
@@ -32,7 +32,7 @@ LEFT JOIN
         (SELECT country, AVG(happiness_score) AS avg_hs_by_country
         FROM happiness_scores
         GROUP BY country) AS country_hs
-ON hs.country = country_hs.country
+ON hs.country = country_hs.country;
 
 -- view one country's happiness scores
 SELECT hs.year, 
@@ -45,7 +45,7 @@ LEFT JOIN
         FROM happiness_scores
         GROUP BY country) AS country_hs
 ON hs.country = country_hs.country
-WHERE hs.country = 'United States'  
+WHERE hs.country = 'United States';
 
 -- Using Multiple Subqueries
 
@@ -92,6 +92,50 @@ WHERE happiness_score > avg_hs_by_country + 1.0;
 -- Return happiness scores for 2015 - 2024 
 SELECT DISTINCT year FROM happiness_scores; -- data from 2015-2023
 SELECT * FROM happiness_scores_current; -- data from 2024
+SELECT * FROM happiness_scores; -- just checking the table's content
 
-SELECT year, country, happiness_score
-FROM happiness_scores AS hs
+-- 
+
+SELECT hs.year, country, happiness_score FROM happiness_scores
+UNION ALL
+SELECT 2024, country, ladder_score FROM happiness_scores_current;
+
+/* Return a country's happiness score for the year as well as
+the average happiness score for country accross years */
+SELECT	hs.year, 
+		hs.country, 
+		hs.happiness_score,
+		country_hs.avg_hs_by_country 
+FROM	(SELECT year, country, happiness_score FROM happiness_scores
+		UNION ALL
+		SELECT 2024, country, ladder_score FROM happiness_scores_current) AS hs
+LEFT JOIN
+        (SELECT country, AVG(happiness_score) AS avg_hs_by_country
+        FROM happiness_scores
+        GROUP BY country) AS country_hs
+ON hs.country = country_hs.country;
+
+/* Return years where the happiness score is a whole point
+greater than the country's average happiness score */
+SELECT * 
+FROM
+(SELECT	hs.year, 
+		hs.country, 
+		hs.happiness_score,
+		country_hs.avg_hs_by_country 
+FROM	(SELECT year, country, happiness_score FROM happiness_scores
+		UNION ALL
+		SELECT 2024, country, ladder_score FROM happiness_scores_current) AS hs
+LEFT JOIN
+        (SELECT country, AVG(happiness_score) AS avg_hs_by_country
+        FROM happiness_scores
+        GROUP BY country) AS country_hs
+ON hs.country = country_hs.country) as hs_country_hs
+WHERE happiness_score > avg_hs_by_country + 1;
+
+/*
+Assignment: Reviewing products produced by each factory
+Need a List of factories along with the names of the products  they produce
+and the number of products they produce. 
+Headers: factory name, product_Name, num_products
+*/
