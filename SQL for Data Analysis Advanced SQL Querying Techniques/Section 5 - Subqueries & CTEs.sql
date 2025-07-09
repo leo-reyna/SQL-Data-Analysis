@@ -143,7 +143,7 @@ Headers: factory name, product_Name, num_products
 
 -- All factories and products
 SELECT factory, product_name 
-FROM products;
+FROM productsucts;
 
 -- All factories and their total number of products
 SELECT factory, COUNT(product_id) as num_prod
