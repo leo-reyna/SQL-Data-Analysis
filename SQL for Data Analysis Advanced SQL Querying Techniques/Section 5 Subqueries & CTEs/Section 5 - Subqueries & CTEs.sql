@@ -168,3 +168,22 @@ on fp.factory = fn.factory
 order by fp.factory, fp.product_name;
 
 
+-- Subqueries in the WHERE and HAVING Clauses
+-- Return Regions with above average happiness scores
+
+-- Average Happiness Score 
+SELECT AVG(happiness_score)
+FROM happiness_scores;
+
+-- above average happiness score (WHERE)
+SELECT * FROM happiness_scores
+WHERE happiness_score > (SELECT AVG(happiness_score) FROM happiness_scores);
+
+
+-- above average happiness scores for each region (HAVING)
+SELECT 
+		region, 
+		AVG(happiness_score) as avg_hs
+FROM 		happiness_scores
+GROUP BY 	region
+HAVING 		avg_hs > (SELECT AVG(happiness_score) FROM happiness_scores);
