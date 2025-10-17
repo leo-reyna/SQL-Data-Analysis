@@ -1,5 +1,6 @@
--- Active: 1745290413437@@127.0.0.1@3306@journey_to_space
+-- Active: 1745290413437@@127.0.0.1@3306@maven_advanced_sql
 USE maven_advanced_sql;
+select ladder_score from happiness_scores_current
 
 -- SCORES THAT ARE GREATER THAN ANY OF THE CURRENT OF ANY 2024 SCORES
 SELECT *
@@ -12,3 +13,4 @@ SELECT *
 FROM    happiness_scores
 WHERE   happiness_score > 
         ALL(select ladder_score from happiness_scores_current);
+

@@ -22,8 +22,11 @@ FROM happiness_scores;
 -- along with how much each product differs from the average price of all products.
 
 
-SELECT product_id, product_name,unit_price,
-(SELECT AVG(unit_price) AS avg_price FROM products) AS avg_price,
-unit_price - (SELECT AVG(unit_price) AS avg_price FROM products) AS diff_price
+SELECT 
+    product_id, 
+    product_name,
+    unit_price,
+    (SELECT AVG(unit_price) AS avg_price FROM products) AS avg_price,
+    unit_price - (SELECT AVG(unit_price) AS avg_price FROM products) AS diff_price
 FROM products
 ORDER BY unit_price DESC;
