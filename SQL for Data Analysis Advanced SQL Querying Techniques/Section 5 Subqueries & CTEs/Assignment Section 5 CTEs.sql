@@ -13,6 +13,8 @@ LEFT JOIN products as p
        HAVING total_amt_spent > 200
        ORDER BY total_amt_spent DESC;
 
+
+
 -- Return the number of orders over 200 dollars
 With cte as(SELECT o.order_id, 
        SUM(o.units * p.unit_price) as total_amt_spent

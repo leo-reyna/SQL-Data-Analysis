@@ -56,6 +56,7 @@ SELECT * FROM products;
 
 SELECT * FROM orders;
 SELECT * FROM products;
+sq
 
 SELECT o.order_id, 
        p.product_id, 
