@@ -1,3 +1,4 @@
+-- Active: 1745290413437@@127.0.0.1@3306@maven_advanced_sql
 -- ASSIGNMENT SECTION 5
 -- Identify products that have a unit price less than the unit price of all products from
 -- Wicked Choccy's? please include which factory is currently producing the product.
