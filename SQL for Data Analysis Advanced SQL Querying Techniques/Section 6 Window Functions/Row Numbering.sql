@@ -17,7 +17,6 @@ INSERT INTO baby_girl_names (name, babies) VALUES
 ('Ava', 70),
 ('Mia', 64);
 
-
 -- View the table
 SELECT * FROM baby_girl_names;
 
