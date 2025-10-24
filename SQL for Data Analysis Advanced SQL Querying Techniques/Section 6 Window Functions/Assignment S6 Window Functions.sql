@@ -2,20 +2,20 @@
 
 -- Windows Functions Basic
 -- view columns of interest
-SELECT
-        customer_id,
-        order_id,
-        order_date,
-        transaction_id
+
+SELECT * FROM orders;
+
+-- Columns of Interest
+SELECT  customer_id, transaction_id, order_id, order_date
 FROM    orders
 ORDER BY customer_id, transaction_id;
 
-SELECT
-        customer_id,
-        order_id,
+-- For each customer, add a column for transaction number
+SELECT  
+        customer_id, 
+        transaction_id, 
+        order_id, 
         order_date,
-        transaction_id,
         ROW_NUMBER() OVER(PARTITION BY customer_id ORDER BY transaction_id) as transaction_number
 FROM    orders
 ORDER BY customer_id, transaction_id;
-
