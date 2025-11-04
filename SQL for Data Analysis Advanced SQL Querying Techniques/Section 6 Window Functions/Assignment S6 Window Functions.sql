@@ -114,13 +114,94 @@ WHERE   prod_rank = 2;
 -- How orders have changed overtime for each customer
 -- produce a table that contains info about each
 -- customer and their change in units form order to order
-
+-- Lead and lag functions
 
 SELECT * FROM orders;
 SELECT 
         customer_id,
         order_id,
-        SUM(units) as total_units,
-        LAG(units) OVER(PARTITION BY customer_id ORDER BY order_id) as prior_units
+        product_id,
+        transaction_id,
+        units
+FROM orders;
+
+-- For each customer, return the total units within each order
+SELECT 
+        customer_id,
+        order_id,
+        SUM(units) as total_units
 FROM orders
-GROUP BY customer_id, order_id; 
+GROUP BY customer_id, order_id
+ORDER BY customer_id;
+
+--  Add on the transaction id to keep track of order sequence
+SELECT 
+        customer_id,
+        order_id,
+        min(transaction_id) as min_tid,
+        SUM(units) as total_units
+FROM orders
+GROUP BY customer_id, order_id
+ORDER BY customer_id, min_tid;
+
+-- turn it into a CTE to view the columna of interest
+WITH CTE1 AS (
+                SELECT 
+                        customer_id,
+                        order_id,
+                        min(transaction_id) as min_tid,
+                        SUM(units) as total_units
+                FROM orders
+                GROUP BY customer_id, order_id
+                ORDER BY customer_id, min_tid)
+SELECT 
+        customer_id,
+        order_id,
+        total_units
+FROM CTE1;
+
+-- create prior units column
+WITH CTE1 AS (
+                SELECT 
+                        customer_id,
+                        order_id,
+                        min(transaction_id) as min_tid,
+                        SUM(units) as total_units
+                FROM orders
+                GROUP BY customer_id, order_id
+                ORDER BY customer_id, min_tid)
+SELECT 
+        customer_id,
+        order_id,
+        total_units,
+        LAG(total_units) OVER (PARTITION BY customer_id ORDER BY min_tid) as prior_units
+FROM CTE1;
+
+-- For each customer, find the change in units per order over time
+
+WITH CTE1 AS (
+                SELECT 
+                        customer_id,
+                        order_id,
+                        MIN(transaction_id) as min_tid,
+                        SUM(units) as total_units
+                FROM orders
+                GROUP BY customer_id, order_id
+                ORDER BY customer_id, min_tid
+                ),
+        
+        CTE2 AS (
+                SELECT 
+                        customer_id,
+                        order_id,
+                        total_units,
+                        LAG(total_units) OVER (PARTITION BY customer_id ORDER BY min_tid) as prior_units
+                FROM CTE1
+                )
+SELECT 
+        customer_id,
+        order_id,
+        total_units,
+        prior_units,
+        total_units - prior_units as diff_units         
+FROM CTE2
