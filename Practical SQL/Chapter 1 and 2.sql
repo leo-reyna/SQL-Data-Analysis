@@ -32,7 +32,6 @@ WHERE first_name = 'Samatha';
 
 SELECT DISTINCT school, salary FROM teachers;
 
-
 SELECT 
 		 first_name, 
 		 last_name, 
@@ -140,4 +139,13 @@ FROM 	teachers
 WHERE 	hire_date < '2010-01-01'
 	AND salary > 40000;
 
-
+SELECT 
+		first_name,
+		last_name,
+		salary,
+		hire_date,
+		school
+FROM 	teachers
+WHERE 	hire_date < '2010-01-01'
+	AND salary > 40000
+ORDER BY salary DESC;

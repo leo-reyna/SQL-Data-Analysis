@@ -205,3 +205,24 @@ SELECT
         prior_units,
         total_units - prior_units as diff_units         
 FROM CTE2
+
+
+-- Top 1% of Customers in terms of how much they've spent with us
+-- This SQL query is trying to find the top 25% of customers by spending
+
+WITH customer_spending AS (SELECT 
+                                o.customer_id,
+                                SUM(o.units * p.unit_price) as total_spent
+                        FROM orders AS o
+                        LEFT JOIN products AS p
+                        ON o.product_id = p.product_id
+                        GROUP BY o.customer_id ),
+
+    customer_quartile AS (SELECT
+                                customer_id,
+                                total_spent,
+                                NTILE(100) OVER(ORDER BY total_spent DESC) AS spent_pct
+                        FROM customer_spending )
+SELECT  *
+FROM    customer_quartile
+WHERE   spent_pct = 1

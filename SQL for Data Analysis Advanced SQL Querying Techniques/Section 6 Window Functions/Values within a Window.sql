@@ -83,7 +83,9 @@ FROM 2PLACE
 WHERE bbcount = 1 
 
 -- LEAD() AND LAG() 
--- Return the difference between yearly scores
+-- Return the difference between yearly scores. 
+-- for calculating year-over-year changes in happiness scores by country
+
 WITH prior_yr_CTE as (
         SELECT 
                 country, 
@@ -91,12 +93,37 @@ WITH prior_yr_CTE as (
                 happiness_score,
                 LAG(happiness_score) OVER(PARTITION BY country ORDER BY year) as prior_yr_happiness_score
                 FROM happiness_scores
-)
+                )
 SELECT 
         country,
         year,
         happiness_score,
         prior_yr_happiness_score,
         happiness_score - prior_yr_happiness_score as hs_change
-FROM    prior_yr_CTE;
+FROM    prior_yr_CTE
+WHERE prior_yr_happiness_score IS NOT NULL;
 
+-- NTILE
+-- Add a percentile to each row of data
+SELECT
+        region,
+        country,
+        happiness_score,
+        NTILE(4) OVER(PARTITION BY region ORDER BY happiness_score DESC) AS hs_percentile
+FROM happiness_scores
+WHERE year = 2023
+ORDER BY region, happiness_score DESC;
+
+-- For each region, return the top 25% of countries, in terms of happiness score
+
+WITH HS_PCT AS (SELECT
+                        region,
+                        country,
+                        happiness_score,
+                        NTILE(4) OVER(PARTITION BY region ORDER BY happiness_score DESC) AS hs_percentile
+                FROM happiness_scores
+                WHERE year = 2023
+                ORDER BY region, happiness_score DESC)
+SELECT *
+FROM HS_PCT
+WHERE hs_percentile = 1;
