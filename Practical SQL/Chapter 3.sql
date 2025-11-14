@@ -14,9 +14,20 @@ VALUES
 
 
 SELECT * FROM char_data_types
-
 COPY char_data_types TO 'C:\YourDirectory\typetest.txt'
 WITH (FORMAT CSV, HEADER, DELIMITER '|');
+
+-- INCREMENTING COLUMN
+CREATE TABLE people(
+    id serial,
+    person_name VARCHAR(100)
+);
+
+INSERT INTO people (person_name)
+VALUES('Joe Dirt'),
+      ('Jane Doe');
+
+SELECT * from people
 
 
 -- Listing 3-2: Number data types in action
