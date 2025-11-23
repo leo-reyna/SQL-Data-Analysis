@@ -1,3 +1,4 @@
+
 -- Connect to database
 USE maven_advanced_sql;
 
@@ -10,22 +11,23 @@ SELECT  country,
         ROUND(LOG(population), 2) as pop_log2
 FROM country_stats;
 
-WITH CTE1 AS 
-(
+-- Floor function for binning
+WITH CTE1 AS (
 SELECT  country, 
         population,
-        FLOOR(population / 1000000) as mil_pop
+        FLOOR(population / 1000000) as population_in_million
 FROM country_stats
 )
 SELECT 
-        mil_pop, 
+        population_in_million, 
         count(country) as num_countries
 FROM CTE1
-GROUP BY mil_pop
-ORDER BY mil_pop;
+GROUP BY population_in_million
+ORDER BY population_in_million;
 
--- Max of a column vs mas of a row: Least and greatest
+-- Max of a column vs masmax of a row: Least and greatest
 -- Create a miles run table
+
 CREATE TABLE miles_run(
     name VARCHAR(50),
     q1 INT,

@@ -1,4 +1,4 @@
--- Active: 1745290413437@@127.0.0.1@3306@maven_advanced_sql
+
 USE maven_advanced_sql;
 select ladder_score from happiness_scores_current
 

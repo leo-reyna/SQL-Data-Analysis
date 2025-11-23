@@ -1,4 +1,3 @@
--- Active: 1745290413437@@127.0.0.1@3306@maven_advanced_sql
 
 -- Windows Functions Basic
 -- Assignment Section 6 - Number 1: 
