@@ -56,15 +56,6 @@ GROUP BY    total_spent_bin
 ORDER BY    total_spent_bin;
 
 
-/*
-  ADD SHIPPING DATES FOR Q2 ORDER DATE
-  ------------------------------------
-  The market research team wants to do a deep dive on the 
-  Q1 2021 orders data we currently have.
-  Can you pull that data for them?>
-  In addtion, they also requested that we include a ship_date
-  column for them that is 2 days after order_date
-*/ 
 
 select * from products;
 SELECT * FROM orders
@@ -140,28 +131,32 @@ INSERT INTO orders (transaction_id, customer_id, order_id, order_date, product_i
 ('T0139', 22206,'US-2021-137719-44290','2021-06-10','CUP-FUD-25540',40),
 ('T0140', 19350,'US-2021-137720-44291','2021-06-12','BRE-MAP-52287',26);
 
-WITH Second_Quarter_Orders_CTE AS 
-(
-    SELECT 
-        order_id, 
-        order_date
-    FROM orders
-    WHERE QUARTER(order_date) = 2
-)
-SELECT
-    order_id,
-    order_date,
-    DATE_ADD(order_date, INTERVAL 2 DAY) AS ship_date
-FROM Second_Quarter_Orders_CTE;
+/*
+  ADD SHIPPING DATES FOR Q2 ORDER DATE
+  ------------------------------------
+  The market research team wants to do a deep dive on the 
+  Q1 2021 orders data we currently have.
+  Can you pull that data for them?>
+  In addtion, they also requested that we include a ship_date
+  column for them that is 2 days after order_date
+*/ 
 
--- OR
+
+SELECT 
+        order_id, 
+        order_date,
+        DATE_ADD(order_date, INTERVAL 2 DAY) AS ship_datE
+FROM orders
+WHERE QUARTER(order_date) = 2
+
+-- OR SOL. 2
 
 SELECT 
     order_id,
     order_date,
     DATE_ADD(order_date, INTERVAL 2 DAY) AS Ship_Date
 FROM orders
-WHERE YEAR(order_date) = 2021 AND MONTH(order_date) BETWEEN 4 AND 6;
+WHERE Year(order_date) = 2021 AND MONTH(order_date) BETWEEN 4 AND 6;
     
 select * from products;
 SELECT * FROM orders
