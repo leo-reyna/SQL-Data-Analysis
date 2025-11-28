@@ -79,4 +79,4 @@ SELECT
 FROM    my_events
 
 select * from products;
-SELECT * FROM orders;
+SELECT * FROM orders
