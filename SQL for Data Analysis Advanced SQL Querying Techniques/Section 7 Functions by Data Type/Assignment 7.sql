@@ -158,5 +158,9 @@ SELECT
 FROM orders
 WHERE Year(order_date) = 2021 AND MONTH(order_date) BETWEEN 4 AND 6;
     
-select * from products;
+SELECT * from products;
 SELECT * FROM orders
+
+
+
+
