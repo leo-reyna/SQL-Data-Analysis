@@ -161,6 +161,24 @@ WHERE Year(order_date) = 2021 AND MONTH(order_date) BETWEEN 4 AND 6;
 SELECT * from products;
 SELECT * FROM orders
 
+SELECT 
+        factory,
+        product_id,
+        REPLACE(REPLACE(factory, "'", "")," ","-") as cleaned_factory_name
+FROM products
+ORDER BY factory, product_id;
 
-
-
+-- Create anew id column called factory_product_id
+WITH clean_fac_CTE as 
+(
+        SELECT 
+            factory,
+            product_id,
+            REPLACE(REPLACE(factory, "'", "")," ","-") as cleaned_factory_name
+        FROM    products
+        ORDER BY factory, product_id
+)
+SELECT  factory, 
+        product_id,
+        CONCAT(product_id, "-", cleaned_factory_name) as combo
+FROM clean_fac_CTE;
