@@ -211,6 +211,20 @@ SELECT  ProductID, Name, Weight
 FROM    Production.Product
 WHERE   Weight IS NULL;
 
+/*
+   1-16. Writing an IN-List
+ Problem
+ You are searching for matches to a specific list of values. You could write a string of predicates joined by  
+OR operators, but you prefer a more easily readable and maintainable solution.
+*/
+
+SELECT
+      ProductID,
+      Name,
+      Color
+FROM  Production.Product
+WHERE Color IN ('Black', 'Silver', 'Red');
+
  SELECT *
  FROM Production.ProductCategory
  TABLESAMPLE(50 ROWS);

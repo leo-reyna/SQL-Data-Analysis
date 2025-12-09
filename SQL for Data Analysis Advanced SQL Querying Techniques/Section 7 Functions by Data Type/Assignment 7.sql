@@ -182,3 +182,5 @@ SELECT  factory,
         product_id,
         CONCAT(product_id, "-", cleaned_factory_name) as combo
 FROM clean_fac_CTE;
+
+--

@@ -56,3 +56,4 @@ SELECT GREATEST(q1, q2, q3, q4) as most_miles
 FROM miles_run;
 SELECT GREATEST(q1, q2, q3, COALESCE(q4, 0)) as most_miles -- getting rid of the null and present the next greatest value
 FROM miles_run;
+
