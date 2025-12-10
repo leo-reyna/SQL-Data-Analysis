@@ -183,4 +183,105 @@ SELECT  factory,
         CONCAT(product_id, "-", cleaned_factory_name) as combo
 FROM clean_fac_CTE;
 
---
+/*
+  PATTERN MATCHING
+  ------------------------------------
+  Remove the word Wonka Bar from the product 
+*/ 
+-- Look at the product table
+SELECT product_name
+FROM products
+ORDER BY product_name DESC;
+
+-- Replacing
+SELECT product_name,
+    REPLACE( product_name, 'Wonka Bar - ', '' ) as new_product_name
+FROM products
+ORDER BY product_name DESC;
+
+-- ALTERNATIVE USING SUBSTRINGS
+SELECT product_name,
+    INSTR( product_name, '-') as hyphen_location,
+    TRIM(SUBSTR( product_name,  INSTR( product_name, '-') + 1 )) as new_product_name
+FROM products
+ORDER BY product_name DESC;
+
+SELECT 
+        product_name,
+        CASE WHEN INSTR( product_name, '-') = 0 THEN product_name
+        INSTR( product_name, '-') + 1 )) END as new_product_name
+FROM products
+ORDER BY product_name DESC;
+
+
+/*
+ FILL IN NULL vALUES
+Sugar shack and the other factory just added two new products that don't have divisions assigned to them.
+For simplicity's sake, could you update those null values to have a value of other.
+Here's an extra challenge for you.
+Instead of updating them to other, could you update them to be the same division as the most common
+division within their respective factories?
+*/
+
+SELECT * FROM products
+
+
+SELECT  
+        product_name,
+        factory,
+        division
+FROM    products;
+
+SELECT  
+        product_name,
+        factory,
+        division,
+        COALESCE(division, 'Other') AS division_other
+FROM    products
+ORDER BY factory, division;
+
+-- the most common division for each factory
+SELECT  
+        factory,
+        division,
+        COUNT( product_name) AS num_products
+FROM    products
+WHERE division IS NOT NULL
+GROUP BY factory, division
+ORDER BY factory, division;
+
+WITH np_cte as 
+(
+    SELECT  
+        factory,
+        division,
+        COUNT( product_name) AS num_products
+        FROM    products
+        WHERE division IS NOT NULL
+        GROUP BY factory, division
+        ORDER BY factory, division
+),
+    np_rank as 
+(       
+        SELECT  factory,
+        division,
+        ROW_NUMBER() OVER(PARTITION BY factory ORDER BY num_products DESC) AS np_rank
+        FROM np_cte
+),
+    top_division AS
+(
+        SELECT *
+        FROM np_rank
+        where np_rank = 1
+)
+SELECT      
+            p.product_name, p.factory, p.division,
+            COALESCE(p.factory, 'Other') AS division_other,
+            COALESCE(p.division, td.division) as division_top
+FROM        products as p
+LEFT JOIN   top_division as td
+ON p.division = td.division
+ORDER BY p.factory, p.division;
+
+SELECT FLOOR(27 /10) * 10 AS floored,
+(27/10) * 10 AS normal 
