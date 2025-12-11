@@ -1,7 +1,7 @@
 -- Listing 4-2: A CREATE TABLE statement for Census county data
 -- Full data dictionary available at: http://www.census.gov/prod/cen2010/doc/pl94-171.pdf
 -- Note: Some columns have been given more descriptive names
-
+use ana
 CREATE TABLE us_counties_2010 (
     geo_name varchar(90),                    -- Name of the geography
     state_us_abbreviation varchar(2),        -- State/U.S. abbreviation
@@ -110,5 +110,43 @@ CREATE TABLE us_counties_2010 (
 SELECT * FROM us_counties_2010;
 
 COPY us_counties_2010
-FROM 'c:\your_directory\us_counties_2010.csv'
+FROM 'c:\your_folder\us_counties_2010.csv'
 WITH (FORMAT CSV, HEADER);
+
+-- Rank the county-level geographies from largest land
+-- toi smallest in sq meters
+SELECT
+        geo_name,
+        state_us_abbreviation,
+        area_land
+FROM us_counties_2010
+ORDER BY area_land DESC
+LIMIT 3;
+
+
+-- counties by longitute // Alaska at the top (negative numbers is represented by the prime meridian)
+SELECT geo_name, state_us_abbreviation, internal_point_lon
+FROM us_counties_2010
+ORDER BY internal_point_lon DESC
+LIMIT 5;
+
+
+-- Importing a subset of columns with COPY
+-- Creating a table to track supervisor salaries
+CREATE TABLE supervisor_salaries(
+    town VARCHAR(30),
+    county VARCHAR(30),
+    supervisor VARCHAR(30),
+    start_date DATE,
+    salary MONEY,
+    benefits MONEY
+);
+
+-- File needed: supervisor_salaries.csv
+-- Copying the columns we want from the file
+COPY supervisor_salaries (town, supervisor, salary)
+FROM 'D:\yourfolder\supervisor_salaries.csv'
+WITH (FORMAT CSV, HEADER);
+
+SELECT * FROM supervisor_salaries
+
