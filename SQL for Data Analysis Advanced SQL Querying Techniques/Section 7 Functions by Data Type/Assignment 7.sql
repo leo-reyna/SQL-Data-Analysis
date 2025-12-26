@@ -255,7 +255,7 @@ WITH np_cte as
     SELECT  
         factory,
         division,
-        COUNT( product_name) AS num_products
+        COUNT(product_name) AS num_products
         FROM    products
         WHERE division IS NOT NULL
         GROUP BY factory, division
@@ -263,7 +263,8 @@ WITH np_cte as
 ),
     np_rank as 
 (       
-        SELECT  factory,
+        SELECT  
+        factory,
         division,
         ROW_NUMBER() OVER(PARTITION BY factory ORDER BY num_products DESC) AS np_rank
         FROM np_cte

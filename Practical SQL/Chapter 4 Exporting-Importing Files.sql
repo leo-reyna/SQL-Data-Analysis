@@ -1,7 +1,7 @@
 -- Listing 4-2: A CREATE TABLE statement for Census county data
 -- Full data dictionary available at: http://www.census.gov/prod/cen2010/doc/pl94-171.pdf
 -- Note: Some columns have been given more descriptive names
-use ana
+
 CREATE TABLE us_counties_2010 (
     geo_name varchar(90),                    -- Name of the geography
     state_us_abbreviation varchar(2),        -- State/U.S. abbreviation
@@ -143,10 +143,18 @@ CREATE TABLE supervisor_salaries(
 );
 
 -- File needed: supervisor_salaries.csv
--- Copying the columns we want from the file
+-- Copying the columns we want from the file 00
 COPY supervisor_salaries (town, supervisor, salary)
 FROM 'D:\yourfolder\supervisor_salaries.csv'
 WITH (FORMAT CSV, HEADER);
 
 SELECT * FROM supervisor_salaries
 
+COPY us_counties_2010
+FROM 'c:\your_folder\us_counties_2010.csv'
+WITH (FORMAT CSV, HEADER);
+
+
+UPDATE supervisor_salaries
+SET
+    county = 'Some County';

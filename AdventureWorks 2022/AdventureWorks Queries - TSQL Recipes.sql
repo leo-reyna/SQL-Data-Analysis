@@ -228,3 +228,13 @@ WHERE Color IN ('Black', 'Silver', 'Red');
  SELECT *
  FROM Production.ProductCategory
  TABLESAMPLE(50 ROWS);
+
+ /*
+   1-17. Performing Wildcard Searches
+Problem
+You don’t have a specific value or list of values to find. What you do have is a general pattern, and you want 
+to find all values that match that pattern.
+ */
+
+ SELECT producID, Name
+ FROM Production.Product;
