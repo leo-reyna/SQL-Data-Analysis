@@ -225,6 +225,7 @@ SELECT
 FROM  Production.Product
 WHERE Color IN ('Black', 'Silver', 'Red');
 
+
  SELECT *
  FROM Production.ProductCategory
  TABLESAMPLE(50 ROWS);
