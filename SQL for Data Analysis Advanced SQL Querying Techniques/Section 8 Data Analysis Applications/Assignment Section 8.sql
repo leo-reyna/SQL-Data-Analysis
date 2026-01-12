@@ -199,20 +199,59 @@ WHERE grade_rank = 1;
 
 SELECT * FROM students;
 
+-- Categorizing grade levels by final grade by department
 SELECT
-    sg.department,
-    ROUND(AVG(CASE WHEN s.grade_level = 9  THEN sg.final_grade END), 0) AS Freshman,
-    ROUND(AVG(CASE WHEN s.grade_level = 10 THEN sg.final_grade END), 0) AS Sophmore,
-    ROUND(AVG(CASE WHEN s.grade_level = 11 THEN sg.final_grade END), 0) AS Junior,
-    ROUND(AVG(CASE WHEN s.grade_level = 12 THEN sg.final_grade END), 0) AS Senior
-FROM student_grades sg
-LEFT JOIN students s
-    ON sg.student_id = s.id
+        sg.department,
+        ROUND(AVG(CASE WHEN s.grade_level = 9 THEN sg.final_grade END),0) AS Freshman,
+        ROUND(AVG(CASE WHEN s.grade_level = 10 THEN sg.final_grade END),0) AS Sophmore,
+        ROUND(AVG(CASE WHEN s.grade_level = 11 THEN sg.final_grade END),0) AS Junior,
+        ROUND(AVG(CASE WHEN s.grade_level = 12 THEN sg.final_grade END),0) AS Senior
+FROM student_grades as sg
+LEFT JOIN students as s
+ON sg.student_id = s.id
 GROUP BY sg.department
-ORDER BY GREATEST(
-    Freshman,
-    Sophmore,
-    Junior,
-    Senior
-) ASC;
+ORDER BY sg.department, Freshman, Sophmore, Junior, Senior;
 
+
+--Assignment 8.2
+--Generate a report that shows the total sales for each month
+--as well as the cumulative sum of sales and the six month moving average of sales
+
+SELECT *
+FROM products
+
+SELECT *
+FROM orders;
+
+--
+-- 1st Calculate the total sales each month
+SELECT 
+    YEAR(o.order_date) AS yr,
+    MONTH(o.order_date) AS mnth,
+    SUM(p.unit_price * o.units) AS total_sales
+FROM orders AS o
+LEFT JOIN products AS p
+    ON o.product_id = p.product_id
+GROUP BY YEAR(o.order_date), MONTH(o.order_date)
+ORDER BY YEAR(o.order_date), MONTH(o.order_date);
+
+-- Add the cumulative sum and 6 month moving average
+WITH cte1 as
+(
+SELECT 
+    YEAR(o.order_date) AS yr,
+    MONTH(o.order_date) AS mnth,
+    SUM(p.unit_price * o.units) AS total_sales
+FROM orders AS o
+LEFT JOIN products AS p
+    ON o.product_id = p.product_id
+GROUP BY YEAR(o.order_date), MONTH(o.order_date)
+ORDER BY YEAR(o.order_date), MONTH(o.order_date)
+)
+SELECT
+    *,
+    ROW_NUMBER() OVER (ORDER BY yr, mnth) as rn,
+    SUM(total_sales) OVER (ORDER BY yr, mnth) AS cumulative_sum, -- CUMULATIVE SUM 
+    AVG(total_Sales) OVER (ORDER BY yr, mnth ROWS BETWEEN 5 PRECEDING AND CURRENT ROW) AS siX_month_moving_avg -- MOVING AVERAGE
+FROM cte1
+ORDER BY yr, mnth;

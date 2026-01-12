@@ -39,11 +39,12 @@ GROUP BY category;
 
 SELECT
         sg.department,
-        AVG(CASE WHEN s.grade_level = 9 THEN sg.final_grade END) AS Freshman,
-        AVG(CASE WHEN s.grade_level = 10 THEN sg.final_grade END) AS Sophmore,
-        AVG(CASE WHEN s.grade_level = 11 THEN sg.final_grade END) AS Junior,
-        AVG(CASE WHEN s.grade_level = 12 THEN sg.final_grade END) AS Senior
+        ROUND(AVG(CASE WHEN s.grade_level = 9 THEN sg.final_grade END),0) AS Freshman,
+        ROUND(AVG(CASE WHEN s.grade_level = 10 THEN sg.final_grade END),0) AS Sophmore,
+        ROUND(AVG(CASE WHEN s.grade_level = 11 THEN sg.final_grade END),0) AS Junior,
+        ROUND(AVG(CASE WHEN s.grade_level = 12 THEN sg.final_grade END),0) AS Senior
 FROM student_grades as sg
 LEFT JOIN students as s
 ON sg.student_id = s.id
 GROUP BY sg.department
+ORDER BY sg.department, Freshman, Sophmore, Junior, Senior;
