@@ -36,7 +36,8 @@ Combine time‑based grouping with ranking logic.
 
 # 💰 PART II: SALARY ANALYSIS
 
-### 1. View the salaries table  
+### 1. View the salaries table
+
 Explore salary data and its structure.
 
 ### 2. Return the top 20% of teams by average annual spending  
