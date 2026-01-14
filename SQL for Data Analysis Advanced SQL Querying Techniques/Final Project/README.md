@@ -75,17 +75,21 @@ Track career movement across franchises.
 # ⚾ PART IV: PLAYER COMPARISON ANALYSIS
 
 ### 1. View the players table  
+
 Explore player attributes and demographics.
 
 ### 2. Which players share the same birthday  
+
 Identify birthday clusters across the league.
 
 ### 3. Create a summary table showing, for each team:  
+
 - Percent of players who bat right  
 - Percent who bat left  
 - Percent who bat both  
 
 ### 4. Analyze how average height and weight at debut have changed over time  
+
 Calculate decade‑over‑decade differences in player physique.
 
 ---
