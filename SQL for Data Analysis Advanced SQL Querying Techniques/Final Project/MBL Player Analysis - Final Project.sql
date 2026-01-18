@@ -1,4 +1,3 @@
--- Active: 1745290413437@@127.0.0.1@3306@sean_lahman_baseball
 -- SQL for Data Analysis - Advannced SQL Querying Technique
 
 -- PART I: SCHOOL ANALYSIS
@@ -119,3 +118,12 @@ spent_perc_cte as (
 SELECT teamID, round(avg_spend / 1000000, 1) as avg_spend_millions
 FROM spent_perc_cte
 WHERE spend_perc = 1;
+
+/*
+ NTILE(5) OVER(ORDER BY avg(total_spend) DESC) AS spend_perc
+ This splits teams into 5 equal buckets:
+- Tile 1 → top 20%
+- Tile 2 → next 20%
+- …
+- Tile 5 → bottom 20%
+*/
