@@ -127,3 +127,6 @@ WHERE spend_perc = 1;
 - …
 - Tile 5 → bottom 20%
 */
+
+-- 2. For each team, show the cumulative sum of spending over the years
+
