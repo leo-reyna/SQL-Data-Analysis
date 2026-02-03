@@ -39,7 +39,7 @@ ON md.dt = sp.date;
 
 
 -- The last coalesce line is called smoothing and it's recommended.
---- It has one column, called dt.
+-- It has one column, called dt.
 WITH RECURSIVE my_dates(dt) AS ( -- it has one column named dt
                                     SELECT '2024-11-01' -- - This is the anchor row, the starting point of the recursion.
                                     UNION ALL

@@ -1,3 +1,4 @@
+-- Active: 1745290413437@@127.0.0.1@3306@maven_advanced_sql
 -- SQL for Data Analysis - Advannced SQL Querying Technique
 
 -- PART I: SCHOOL ANALYSIS
@@ -91,7 +92,7 @@ ORDER BY decade DESC, row_num;
 -- PART 2: Salary Analysis (window functions, rolling calculations, min/max filtering)
 -- Using the Sean Lahman Baseball Database - Complete the following steps:
 -- 1. Return the 20% of team in terms of average annual spending
--- 2. For each team, show the cumulative sum of spending over the years
+-- 2. For each team, show the cumulative sum of spending over the years (Rolling Calculations)
 -- 3. Return the first year that each team's cumulative spending surpasses 1 billion
 
 
@@ -130,3 +131,63 @@ WHERE spend_perc = 1;
 
 -- 2. For each team, show the cumulative sum of spending over the years
 
+SELECT * FROM salaries;
+
+WITH yearly as(
+    SELECT  
+        yearID, 
+        teamID, 
+        SUM(salary) as total_spend
+    FROM salaries
+    GROUP BY teamID, yearID
+)
+SELECT  
+        yearID, 
+        teamID, 
+        total_spend,
+        ROUND(SUM(total_spend) OVER(
+                                PARTITION BY teamID 
+                                ORDER BY yearID
+                                ROWS UNBOUNDED PRECEDING) / 1000000, 1) AS cumulative_spend_mils
+FROM yearly
+ORDER BY teamID, yearID;
+
+-- 3. Return the first year that each team's cumulative spending surpasses 1 billion
+WITH yearly AS (
+    SELECT  
+        yearID, 
+        teamID, 
+        SUM(salary) AS total_spend
+    FROM salaries
+    GROUP BY teamID, yearID
+), 
+cumulative AS (
+    SELECT  
+        yearID, 
+        teamID, 
+        SUM(total_spend) OVER(
+            PARTITION BY teamID 
+            ORDER BY yearID
+            ROWS UNBOUNDED PRECEDING) AS cumulative_spend
+    FROM yearly
+),
+threshold AS (
+    SELECT 
+        teamID,
+        yearID as first_year_over_1B,
+        cumulative_spend,
+        ROW_NUMBER() OVER (
+            PARTITION BY teamID 
+            ORDER BY yearID
+        ) AS rn
+    FROM cumulative
+    WHERE cumulative_spend > 1000000000
+AND teamID IS NOT NULL
+)
+SELECT 
+    teamID,
+    first_year_over_1B,
+    ROUND(cumulative_spend / 1000000000, 2) cumulative_sum_billions
+FROM threshold 
+WHERE rn = 1
+ORDER BY teamID;
