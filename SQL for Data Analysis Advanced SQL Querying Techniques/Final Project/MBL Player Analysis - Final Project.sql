@@ -191,3 +191,122 @@ SELECT
 FROM threshold 
 WHERE rn = 1
 ORDER BY teamID;
+
+/*
+  ASSIGNMENT: Player Career Analysis
+Using the Sean Lahman Baseball Database, complete the following steps
+a) For each player, calculate their age at their first (debut) game, their last game, and 
+their career length (all in years). Sort from longest career to shortest career.
+b) What team did each player play on for their starting and ending years?
+c) How many players started and ended on the same team and also played for over a decade?
+*/
+
+
+/*
+For each player, calculate their age at their first (debut) game, their last game, and 
+their career length (all in years). Sort from longest career to shortest career.
+*/
+
+--  View the players table and find the number of players in the table
+SELECT * FROM players;
+SELECT COUNT(*) FROM players;
+
+
+-- I had to fix the format of the debut and finalGame columns to be able to do date calculations on them. 
+-- I added two new columns to the players table, debut_date and final_date, and then updated those columns with the properly 
+-- formatted dates. I also checked for any weird or malformed entries that couldn't be converted to dates.
+
+ALTER TABLE players
+ADD COLUMN debut_date DATE,
+ADD COLUMN final_date DATE;
+
+UPDATE players
+SET debut_date =
+        CASE
+            WHEN debut REGEXP '^[0-9]{4}-[0-9]{2}-[0-9]{2}$'
+                THEN CAST(debut AS DATE)
+            WHEN debut REGEXP '^[0-9]{1,2}/[0-9]{1,2}/[0-9]{2}$'
+                THEN STR_TO_DATE(debut, '%m/%d/%y')
+            ELSE NULL
+        END,
+    final_date =
+        CASE
+            WHEN finalGame REGEXP '^[0-9]{4}-[0-9]{2}-[0-9]{2}$'
+                THEN CAST(finalGame AS DATE)
+            WHEN finalGame REGEXP '^[0-9]{1,2}/[0-9]{1,2}/[0-9]{2}$'
+                THEN STR_TO_DATE(finalGame, '%m/%d/%y')
+            ELSE NULL
+        END;
+-- any weird or malformed entries.
+SELECT nameGiven, debut, debut_date, finalGame, final_date
+FROM players
+WHERE debut_date IS NULL OR final_date IS NULL;
+
+-- deleting the original debut and finalGame columns since we have the properly formatted debut_date and final_date columns now.
+ALTER TABLE players
+DROP COLUMN debut,
+DROP COLUMN finalGame;
+
+-- rename the new date COLUMNs to be debut and finalGame so that the rest of the queries work without needing to change the column names.
+
+ALTER TABLE players
+CHANGE debut_date debut DATE,
+CHANGE final_date finalGame DATE;
+UPDATE players
+SET debut = 2042-04-23
+
+-- For each player, calculate their age at their first (debut) game, their last game, and
+-- their career length (all in years). Sort from longest career to shortest career.
+
+
+SELECT  nameGiven,
+        playeriD,
+        debut,
+        finalGame,
+        CAST(CONCAT(birthYear, '-', birthMonth, '-', birthDay) AS DATE) AS birth_date,
+        TIMESTAMPDIFF(YEAR, CAST(CONCAT(birthYear, '-', birthMonth, '-', birthDay) AS DATE), debut) as ageAtDebut,
+        TIMESTAMPDIFF(YEAR, CAST(CONCAT(birthYear, '-', birthMonth, '-', birthDay) AS DATE), finalGame) as ageAtFinal,
+    FROM players
+ORDER BY career_length_years DESC, ageAtDebut DESC;
+
+
+
+-- Task 3: What team did each player play on for their starting and ending years?
+SELECT playerId, nameGiven, debut, finalGame
+FROM players;
+
+SELECT playerId, yearID, teamID
+FROM salaries;
+
+SELECT 
+        --p.playerId, 
+        p.nameGiven, 
+        p.debut, 
+        p.finalGame,
+        s.yearId as starting_year,
+        s.teamId as starting_team,
+        e.yearId as ending_year,
+        e.teamId as ending_team
+FROM players AS P
+INNER JOIN salaries AS s
+    ON p.playerId = s.playerId AND YEAR(p.debut) = s.yearId
+INNER JOIN salaries AS e
+    ON p.playerId = s.playerId AND YEAR(p.finalGame) = e.yearId
+
+-- Task 4: How many players started and ended on the same team and also played for over a decade?
+
+SELECT 
+        --p.playerId, 
+        p.nameGiven, 
+        p.debut, 
+        p.finalGame,
+        s.yearId as starting_year,
+        s.teamId as starting_team,
+        e.yearId as ending_year,
+        e.teamId as ending_team
+FROM players AS P
+INNER JOIN salaries AS s
+    ON p.playerId = s.playerId AND YEAR(p.debut) = s.yearId
+INNER JOIN salaries AS e
+    ON p.playerId = s.playerId AND YEAR(p.finalGame) = e.yearId
+WHERE s.teamId = e.teamId and e.yearId - s.yearId > 10;
