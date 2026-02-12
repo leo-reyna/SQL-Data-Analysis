@@ -1,4 +1,3 @@
--- Active: 1745290413437@@127.0.0.1@3306@maven_advanced_sql
 -- SQL for Data Analysis - Advannced SQL Querying Technique
 
 -- PART I: SCHOOL ANALYSIS
@@ -296,7 +295,7 @@ INNER JOIN salaries AS e
 -- Task 4: How many players started and ended on the same team and also played for over a decade?
 
 SELECT 
-        --p.playerId, 
+        -- p.playerId, 
         p.nameGiven, 
         p.debut, 
         p.finalGame,
@@ -310,3 +309,50 @@ INNER JOIN salaries AS s
 INNER JOIN salaries AS e
     ON p.playerId = s.playerId AND YEAR(p.finalGame) = e.yearId
 WHERE s.teamId = e.teamId and e.yearId - s.yearId > 10;
+
+/*
+ASSIGNMENT: Player Comparison Analysis
+Using the Sean Lahman Baseball Database, complete the following steps
+a) Which players have the same birthday?
+
+b) Create a summary table that shows for each team, 
+what percent of players bat right, left and both.
+
+c) How have average height and weight at debut game changed over the years, 
+and what's the decade-over-decade difference?
+*/
+
+-- a) Which players have the same birthday?
+
+SELECT * FROM players;
+
+WITH bn as(
+    SELECT 
+    nameGiven, 
+    CAST(CONCAT(birthYear, '-', birthMonth, '-', birthDay) AS DATE) AS birthdate
+FROM players
+)
+SELECT  
+    birthdate, 
+    GROUP_CONCAT(nameGiven SEPARATOR ', ') as player_names
+FROM bn
+WHERE YEAR(birthdate) BETWEEN 1980 AND 1990
+GROUP BY birthdate
+ORDER BY birthdate;
+
+-- b) Create a summary table that shows for each team,
+-- what percent of players bat right, left and both.    
+
+SELECT * FROM players;
+
+SELECT DISTINCT(bats) FROM players;
+
+SELECT 
+    s.teamID, 
+    ROUND(SUM(CASE WHEN p.bats = 'R' THEN 1 ELSE 0 END) / COUNT(s.playerID) * 100, 1) AS bats_right,
+    ROUND(SUM(CASE WHEN p.bats = 'L' THEN 1 ELSE 0 END) / COUNT(s.playerID) * 100, 1) AS bats_left,
+    ROUND(SUM(CASE WHEN p.bats = 'B' THEN 1 ELSE 0 END) / COUNT(s.playerID) * 100, 1) AS bats_both
+FROM salaries AS s
+JOIN players AS p
+    ON s.playerId = p.playerId
+GROUP BY s.teamID
