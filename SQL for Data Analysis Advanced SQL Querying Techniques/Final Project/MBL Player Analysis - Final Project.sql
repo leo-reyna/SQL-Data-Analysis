@@ -356,3 +356,24 @@ FROM salaries AS s
 JOIN players AS p
     ON s.playerId = p.playerId
 GROUP BY s.teamID
+
+/*
+  c) How have average height and weight at debut game changed over the years, 
+and what's the decade-over-decade difference?
+*/
+
+SELECT * FROM players
+
+with hw as 
+(
+    SELECT  ROUND(YEAR(debut), -1) AS decade,
+        AVG(height) AS avg_height,
+        AVG(weight) AS avg_weight
+FROM players
+GROUP BY decade
+)
+SELECT  decade, 
+        avg_height - lag(avg_height) OVER(ORDER BY decade) AS prior_height,
+        avg_weight - lag(avg_weight) OVER(ORDER BY decade) AS prior_weight
+FROM hw
+WHERE decade is not NULL;
