@@ -377,3 +377,4 @@ SELECT  decade,
         avg_weight - lag(avg_weight) OVER(ORDER BY decade) AS prior_weight
 FROM hw
 WHERE decade is not NULL;
+

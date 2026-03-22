@@ -1,3 +1,4 @@
+-- Active: 1745290413437@@127.0.0.1@3306@maven_advanced_sql
 -- Assignment: Self Joins
 -- Write a quert to determine which products are within 25 cents of each other in terms
 -- of unit price and return a list of all the candy pairs?

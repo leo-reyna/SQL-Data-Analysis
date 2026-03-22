@@ -22,8 +22,8 @@ FROM    orders
 ORDER BY customer_id, transaction_id;
 
 -- Assignment Section 6 - Number 2: 
--- Create a product rank field that returns a 1 for the most popular product in an order, 2 for second most, and so on. 
--- Show us ranks if they tie
+-- Create a product rank field that returns a 1 for the most popular product in an order, 
+-- 2 for second most, and so on. Show us ranks if they tie
 
 SELECT * FROM orders;
 -- For each order, rnak the products from most units to fewest units
