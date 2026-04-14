@@ -1,5 +1,4 @@
 -- Section 2 Fundamentals
-
 select * from customer;
 
 SELECT first_name, last_name, email
