@@ -1,4 +1,5 @@
 -- Section 2 Fundamentals
+-- Udemy The Complete SQL bootcamp class
 select * from customer;
 
 SELECT first_name, last_name, email
