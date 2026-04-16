@@ -90,23 +90,20 @@ LIMIT 10;
   You'd like to get the signup date of your last member. How can you retrieve this information?
   Expected Result
 2012-09-26 18:08:45
-
 */
 
-SELECT 
-    max(joindate)
-FROM cd.members;
+SELECT MAX(joindate) AS latest_joindate FROM cd.members;
 
 /*
   Produce a count of the number of facilities that have a cost to guests of 10 or more.
-Expected Result
-6
+Expected Result 6
 */
+
 SELECT * FROM cd.facilities;
 
 SELECT count(name)
 FROM cd.facilities
-WHERE guestcost >= 10
+WHERE guestcost >= 10;
 
 /*
   
