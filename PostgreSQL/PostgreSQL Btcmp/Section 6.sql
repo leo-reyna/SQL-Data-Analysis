@@ -117,3 +117,19 @@ FROM customer as c
 WHERE NOT EXISTS
 (SELECT * FROM payment as p
 WHERE p.customer_id = c.customer_id AND amount > 11)
+
+-- SELF JOIN
+
+SELECT e1. name as employee, e2.name AS rep
+FROM employees as e1
+JOIN employees as e2
+    ON e1.emp_id = e2.emp_did;
+
+SELECT f1.title, f2.title, f1.length 
+from film as f1
+INNER JOIN film as f2
+    ON f1.film_id <> f2.film_id
+    AND f1.length = f2.length;
+
+select * from film;
+select * from language;
