@@ -1,7 +1,7 @@
 -- db:dvdrental
 -- Timestamps and Extract - Part 1
 
- SHOW ALL
+SHOW ALL
 
 SHOW TIMEZONE
 

@@ -147,3 +147,33 @@ ORDER BY b.facid, sum(slots);
   How can you produce a list of the start times for bookings for tennis courts, for the date '2012-09-21'? 
   Return a list of start time and facility name pairings, ordered by the time.
 */
+
+SELECT * FROM cd.bookings;
+SELECT * FROM cd.facilities;
+
+SELECT 
+    b.facid,
+    b.starttime,
+    f.name
+FROM cd.bookings AS b
+LEFT JOIN cd.facilities as f
+    on b.facid = f.facid
+WHERE b.facid IN (0,1) AND b.starttime >= '2012-09-21'
+GROUP BY b.facid, f.name, b.starttime
+ORDER BY b.starttime;
+
+/*
+  How can you produce a list of the start times for bookings by members named 'David Farrell'?
+Expected result is 34 rows of timestamps
+*/
+
+SELECT * FROM cd.bookings;
+SELECT * FROM cd.members;
+SELECT 
+    m.firstname,
+    m.surname,
+    b.starttime
+FROM cd.bookings AS b
+LEFT JOIN cd.members as m
+ON b.memid = m.memid 
+WHERE m.firstname = 'David' AND m.surname = 'Farrell';
