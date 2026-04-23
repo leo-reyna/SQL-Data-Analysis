@@ -84,7 +84,7 @@ SELECT
      DISTINCT surname
 FROM cd.members
 ORDER BY surname ASC
-LIMIT 10;
+LIMIT 10
 
 /*
   You'd like to get the signup date of your last member. How can you retrieve this information?
@@ -142,7 +142,7 @@ LEFT JOIN cd.facilities as f
 GROUP BY b.facid, f.name
 HAVING SUM(slots) > 1000
 ORDER BY b.facid, sum(slots);
-sdfa
+
 
 /*
   How can you produce a list of the start times for bookings for tennis courts, for the date '2012-09-21'? 
