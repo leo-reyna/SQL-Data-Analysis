@@ -147,4 +147,37 @@ RENAME TO information;
 SELECT * FROM information;
 
 ALTER TABLE information
-RENAME COLUMN person TO people
+RENAME COLUMN person TO people;
+
+ALTER TABLE information 
+DROP COLUMN people;
+
+ALTER TABLE information 
+DROP COLUMN IF EXISTS people;
+
+
+-- CHECK Constraint
+CREATE TABLE employees
+(
+    emp_id SERIAL PRIMARY KEY,
+    first_name VARCHAR(50) NOT NULL,
+    last_name VARCHAR(50) NOT NULL,
+    dob DATE CHECK (dob > '1900-01-01'),
+    hire_date DATE CHECK (hire_date > dob),
+    salary INTEGER CHECK (salary > 0)
+)
+
+SELECT * from employees;
+
+INSERT INTO employees
+(
+    first_name,
+    last_name,
+    dob,
+    hire_date,
+    salary
+)
+VALUES
+(
+    'Sammy', 'Smith', '2004-06-03', '2022-03-09', 150000
+)
