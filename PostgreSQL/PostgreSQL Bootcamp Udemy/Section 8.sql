@@ -6,19 +6,19 @@ CREATE TABLE account(
     password VARCHAR(50) NOT NULL,
     email VARCHAR(250) UNIQUE NOT NULL,
     created_on TIMESTAMP NOT NULL,
-    last_loging TIMESTAMP
-)
+    last_login TIMESTAMP
+);
 
 CREATE TABLE job(
     job_id SERIAL PRIMARY KEY,
     job_name VARCHAR(200) UNIQUE NOT NULL
-)
+);
 
 CREATE TABLE account_job(
     user_id INTEGER REFERENCES account(user_id),
     job_id INTEGER REFERENCES job(job_id),
     hire_date TIMESTAMP
-)
+);
 
 select * from account;
 
@@ -27,7 +27,7 @@ INSERT INTO account (
     password,
     email,
     created_on,
-    last_loging
+    last_login
 )
 VALUES
 ('Jose', 'Pass123!', 'joser.user01@example.com', CURRENT_TIMESTAMP, NULL),
@@ -84,7 +84,7 @@ JOIN job as j
 SELECT * FROM account;
 
 UPDATE account
-SET last_loging = CURRENT_TIMESTAMP
+SET last_login = CURRENT_TIMESTAMP
 WHERE user_id = 1;
 
 SELECT * FROM job;
@@ -97,18 +97,18 @@ FROM account
 WHERE account_job.user_id = account.user_id;
 
 UPDATE account
-SET last_loging = CURRENT_TIMESTAMP
-RETURNING emaiil, last_loging;
+SET last_login = CURRENT_TIMESTAMP
+RETURNING email, last_login;
 
 INSERT INTO job(job_name)
-VALUES('Laborer')
+VALUES('Laborer');
 
 INSERT INTO account( 
     username,
     password,
     email,
     created_on,
-    last_loging
+    last_login
 )
 VALUES
 (
@@ -119,7 +119,7 @@ VALUES
 INSERT INTO account_job (user_id, job_id, hire_date)
 VALUES
 (1, 11, '2024-01-25'),   -- jose → laborer
-(12, 11, '2024-02-20'),   -- armando → laborer
+(12, 11, '2024-02-20');   -- armando → laborer
 
 UPDATE account
 SET username = 'armando_smith'
@@ -137,7 +137,7 @@ CREATE TABLE informacion
     title VARCHAR(500) NOT NULL,
     person VARCHAR(50) NOT NULL UNIQUE
     
-)
+);
 
 SELECT * FROM informacion;
 
@@ -165,7 +165,7 @@ CREATE TABLE employees
     dob DATE CHECK (dob > '1900-01-01'),
     hire_date DATE CHECK (hire_date > dob),
     salary INTEGER CHECK (salary > 0)
-)
+);
 
 SELECT * from employees;
 
@@ -180,4 +180,4 @@ INSERT INTO employees
 VALUES
 (
     'Sammy', 'Smith', '2004-06-03', '2022-03-09', 150000
-)
+);
